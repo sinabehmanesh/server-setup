@@ -1,2 +1,5 @@
 ---
 # handlers file for server-setup
+- name: apt_update
+  service:
+    update_cache: yes

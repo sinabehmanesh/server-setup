@@ -1,0 +1,4 @@
+---
+- name: update apt and install dependecies for Rocket Chat on debian ubuntu
+  apt:
+    update_cache: yes

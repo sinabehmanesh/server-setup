@@ -1,0 +1,29 @@
+---
+- name: install mongodb requirements
+  ansible.builtin.apt:
+    name:
+      - wget
+      - curl
+      - gnupg2
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - lsb-release
+    state: present
+
+- name: add Mongodb apt GPG key
+  ansible.builtin.apt_key:
+    url:  https://www.mongodb.org/static/pgp/server-5.0.asc
+    state: present
+
+- name: add Mongodb Repository
+  ansible.builtin.apt_repository:
+    repo:  "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $( lsb_release -cs)/mongodb-org/5.0 multiverse"
+    state: present
+  notify: apt_update
+  ignore_errors: true
+
+- name: install Mongodb
+  ansible.builtin.apt:
+    name: mongodb-org
+    state: present
