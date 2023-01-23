@@ -1,12 +1,15 @@
-Role Name
+Server setup
 =========
 
-A brief description of the role goes here.
+This ansible playbook helps you to setup basic services you need for your deployment on ubuntu server.
+more distos will be supported in the future.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+* a fast, realible and secure SSH connection with inventory hosts
+
+* stable internet connection
 
 Role Variables
 --------------
