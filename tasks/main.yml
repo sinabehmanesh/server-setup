@@ -1,2 +1,23 @@
 ---
 # tasks file for server-setup
+- name: install Rocketchat on ubuntu server
+  hosts: all
+  gather_facts: true
+  become: true
+
+  vars_files:
+    - ../secrets/sudo.yml
+
+  tasks:
+  - name: gathering OS vars
+    debug:
+      msg: "{{ ansible_facts }}"
+  - include_tasks: Debian-apt.yml
+    when: ansible_os_family == "Debian"
+
+  - include_tasks: Ubuntu-mongodb.yml
+    when: ansible_distribution == "Ubuntu"
+    ignore_errors: true
+
+  - include_tasks: Ubuntu-node.yml
+    when: ansible_distribution == "Ubuntu"

@@ -1,0 +1,17 @@
+---
+- name: download Nodejs installer
+  ansible.builtin.get_url:
+    url: "https://deb.nodesource.com/setup_14.x"
+    dest: "./setup-node.sh"
+    mode: '0750'
+
+- name: execute nodejs installer script
+  ansible.builtin.shell: bash ./setup-node.sh
+  notify: apt_update
+
+- name: install node using apt
+  ansible.builtin.apt:
+    name: nodejs
+    statge: present
+
+
