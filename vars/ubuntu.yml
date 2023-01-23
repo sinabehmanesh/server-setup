@@ -1,0 +1,11 @@
+---
+
+#database version
+mongodb_version: "5.0.9"
+
+#node js version
+node_version: "14.20.0"
+npm_version:  "6.14.15"
+
+#nginx version
+nginx_version: "latest-stable"
