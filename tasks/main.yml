@@ -27,3 +27,7 @@
 #installing Rocketchat requirements on ubuntu
   - include_tasks: Ubuntu-rocketchat.yml
     when: ansible_distribution == "Ubuntu"
+
+#install nginx and copy its configuration
+  - include_tasks: Ubuntu-nginx.yml
+    when: ansible_distribution == "Ubuntu"

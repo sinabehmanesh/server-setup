@@ -9,3 +9,8 @@
     name: mongod
     state: present
     enabled: yes
+
+- name: nginxreload
+  service:
+    name: nginx
+    state: restarted
