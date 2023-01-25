@@ -28,4 +28,36 @@
     name: mongodb-org
     state: present
 
+- name: change config files for mongodb(as mentioned in the rocketchat docs)
+  ansible.builtin.inlinefile:
+    path: /etc/mongod.conf
+    regexp: '^engine'
+    line: engine: wiredTiger
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: again change replication config in mongodb confguration files
+  ansible.builtin.inlinefile:
+    path: /etc/mongod.conf
+    regexp: '^replSetName:'
+    line: replSetName: rs01
+    owner: root
+    group: root
+    mode: '0644'
+  notify: mongorestart
+
+- name: create replicaset
+  ansible.builtin.shell: |
+    mongo --eval "printjson(rs.initiate())"
+
+- name: systemd daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: start rocketchat service
+  ansible.builtin.service:
+    name: rocketchat
+    state: present
+    enabled: yes
 
