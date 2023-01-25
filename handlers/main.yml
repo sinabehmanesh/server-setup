@@ -3,3 +3,9 @@
 - name: apt_update
   service:
     update_cache: yes
+
+- name: mongorestart
+  ansible.builtin.systemd:
+    name: mongod
+    state: present
+    enabled: yes
