@@ -1,0 +1,38 @@
+---
+- name: installing nginx apt requirements
+  ansible.builtin.apt:
+    name:
+      - curl
+      - gnupg2
+      - ca-certificates
+      - lsb-release
+      - ubuntu-keyring
+    state: present
+
+- name: import nginx official GPG key
+  ansible.builtin.apt_key:
+    url: https://nginx.org/keys/nginx_signing.key
+    state: present
+
+- name: import nginx key
+  ansible.builtin.get_url:
+    url: https://nginx.org/keys/nginx_signing.key 
+    dest: /usr/share/keyrings/nginx-archive-keyring.gpg
+
+- name: add nginx repository into apt
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" 
+    state: present
+  notify: aptupdate
+
+- name: repository pin
+  ansible.builtin.shell: |
+    echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
+                 | sudo tee /etc/apt/preferences.d/99nginx
+  notify: aptupdate
+
+- name: install nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+    state: present
