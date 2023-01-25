@@ -6,7 +6,8 @@
     mode: '0750'
 
 - name: execute nodejs installer script
-  ansible.builtin.shell: bash ./setup-node.sh
+  ansible.builtin.shell: |
+    bash ./setup-node.sh
   notify: apt_update
 
 - name: install node using apt

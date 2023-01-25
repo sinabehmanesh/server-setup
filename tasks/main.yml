@@ -15,9 +15,15 @@
   - include_tasks: Debian-apt.yml
     when: ansible_os_family == "Debian"
 
+#installing Mongodb 5 on ubuntu
   - include_tasks: Ubuntu-mongodb.yml
     when: ansible_distribution == "Ubuntu"
     ignore_errors: true
 
+#installing Node on ubuntu
   - include_tasks: Ubuntu-node.yml
+    when: ansible_distribution == "Ubuntu"
+
+#installing Rocketchat requirements on ubuntu
+  - include_tasks: Ubuntu-rocketchat.yml
     when: ansible_distribution == "Ubuntu"

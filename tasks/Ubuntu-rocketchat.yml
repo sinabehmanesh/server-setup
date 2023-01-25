@@ -1,0 +1,37 @@
+---
+- name: installing apt requirements
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - graphicsmagick
+
+- name: unzip rocketchat latest
+  ansible.builtin.unarchive:
+    src: https://releases.rocket.chat/latest/download
+    dest: /tmp/
+
+- name: install rocketchat npm
+  ansible.builtin.shell: |
+    npm install --production
+  chdir: cd /tmp/bundle/programs/server
+
+
+- name: create user and group for rocketchat
+  ansible.builtin.user:
+    name: rocketchat
+    groups: sudo, rocketchat
+    append: yes
+
+- name: move rocketchat project into opt
+  ansible.builtin.copy:
+    src: /tmp/bundle
+    dest: /opt/Rocket.chat
+    group: rocketchat
+    owner: rocketchat
+
+- name: configuration for systemd service file
+  ansible.builtin.copy:
+    src: ../files/rocketchat.service
+    dest: /lib/systemd/system/rocketchat.service
+
+
