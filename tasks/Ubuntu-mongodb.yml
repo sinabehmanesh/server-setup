@@ -29,19 +29,19 @@
     state: present
 
 - name: change config files for mongodb(as mentioned in the rocketchat docs)
-  ansible.builtin.inlinefile:
+  ansible.builtin.lineinfile:
     path: /etc/mongod.conf
     regexp: '^engine'
-    line: engine: wiredTiger
+    line: 'engine: wiredTiger'
     owner: root
     group: root
     mode: '0644'
 
 - name: again change replication config in mongodb confguration files
-  ansible.builtin.inlinefile:
+  ansible.builtin.lineinfile:
     path: /etc/mongod.conf
     regexp: '^replSetName:'
-    line: replSetName: rs01
+    line: 'replSetName: rs01'
     owner: root
     group: root
     mode: '0644'
