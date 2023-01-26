@@ -24,9 +24,8 @@
   notify: apt_update
   ignore_errors: true
 
-- name: making sure that repo and key are added
+- name: making sure that repo is added
   ansible.builtin.shell: |
-    wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - |
     echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $( lsb_release -cs)/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
   notify: apt_update
 
