@@ -19,16 +19,18 @@ A description of the settable variables for this role should go here, including 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+this role is ready to be deployed. depends on a Ubuntu server and a relies on a fast and stable internet connection.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+just try to rum main yml file in tasks directory, you can also include this role.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+
+Help
+----------------
+i need handlers to be configure, and also this could be helpful if it was compatible with Centos version.
+will be happy to see your PR on this
 
 License
 -------
