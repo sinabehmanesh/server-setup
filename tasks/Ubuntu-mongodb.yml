@@ -21,13 +21,15 @@
   ansible.builtin.apt_repository:
     repo:  "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $( lsb_release -cs)/mongodb-org/5.0 multiverse"
     state: present
-  notify: apt_update
   ignore_errors: true
 
 - name: making sure that repo is added
   ansible.builtin.shell: |
     echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $( lsb_release -cs)/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-  notify: apt_update
+
+- name: update apt repo or you can just call handler
+  ansible.builtin.apt:
+    update-cache: yes
 
 - name: install Mongodb
   ansible.builtin.apt:
@@ -51,11 +53,16 @@
     owner: root
     group: root
     mode: '0644'
-  notify: mongorestart
 
-- name: create replicaset
-  ansible.builtin.shell: |
-    mongo --eval "printjson(rs.initiate())"
+- name: mongodb start and enable(or you can user mongorestart handler)
+  ansible.builtin.systemd:
+    name: mongod
+    state: restarted
+    enabled: yes
+
+      #- name: create replicaset
+  #  ansible.builtin.shell: |
+    #    mongo --eval "printjson(rs.initiate())"
 
 - name: systemd daemon reload
   ansible.builtin.systemd:
@@ -64,6 +71,6 @@
 - name: start rocketchat service
   ansible.builtin.service:
     name: rocketchat
-    state: present
+    state: restarted
     enabled: yes
 
